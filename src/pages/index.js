@@ -19,7 +19,7 @@ import Image from "next/image";
 
 const characters = [
   {
-    name: "Pokemon Caractors",
+    name: "Pokemon Characters",
     data: [
       "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png",
       "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/005.png",
@@ -34,7 +34,7 @@ const characters = [
     ],
   },
   {
-    name: "Cartoon Caractors",
+    name: "Cartoon Characters",
     data: [
       Bart1,
       Bart2,
