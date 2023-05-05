@@ -180,7 +180,7 @@ export default function Home() {
             cancel ? "hidden" : "block"
           )}
         >
-          {boardData.map((data, index) => {
+          {boardData?.map((data, index) => {
             const flipped = flippedCards.includes(index) ? true : false;
             const matched = matchedCards.includes(index) ? true : false;
             return (
