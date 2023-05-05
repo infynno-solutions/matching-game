@@ -8,8 +8,6 @@ const Modal = ({ open, scoredTime, moves, initialize, setOpen, setCancel }) => {
   let [isOpen, setIsOpen] = useState(open);
   useEffect(() => {
     open ? setIsOpen(true) : setIsOpen(false);
-    console.log(open, "open");
-    console.log(isOpen, "isopen");
   }, [open, isOpen]);
 
   function closeModal() {
