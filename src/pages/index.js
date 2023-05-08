@@ -3,16 +3,6 @@ import Card from "@/components/Card";
 import Timer from "@/components/Timer";
 import Modal from "@/components/Modal";
 import ListBox from "@/components/ListBox";
-import Bart1 from "../assets/theme/Cartoon-caractor/bart-simpson.png";
-import Bart2 from "../assets/theme/Cartoon-caractor/blossom-bubbles.png";
-import Bart3 from "../assets/theme/Cartoon-caractor/bugs-bunny.png";
-import Bart4 from "../assets/theme/Cartoon-caractor/charlie-brown.png";
-import Bart5 from "../assets/theme/Cartoon-caractor/daffy-duck.png";
-import Bart6 from "../assets/theme/Cartoon-caractor/donald-duck.png";
-import Bart7 from "../assets/theme/Cartoon-caractor/doraemon.png";
-import Bart8 from "../assets/theme/Cartoon-caractor/Pikachu.png";
-import Bart9 from "../assets/theme/Cartoon-caractor/shaggy-rogers.png";
-import Bart10 from "../assets/theme/Cartoon-caractor/tom-jerry.png";
 import classNames from "classnames";
 import Logo from "../assets/images/logo.svg";
 import Image from "next/image";
@@ -36,16 +26,16 @@ const characters = [
   {
     name: "Cartoon Characters",
     data: [
-      Bart1,
-      Bart2,
-      Bart3,
-      Bart4,
-      Bart5,
-      Bart6,
-      Bart7,
-      Bart8,
-      Bart9,
-      Bart10,
+      "/assets/theme/Cartoon-caractor/bart-simpson.png",
+      "/assets/theme/Cartoon-caractor/blossom-bubbles.png",
+      "/assets/theme/Cartoon-caractor/bugs-bunny.png",
+      "/assets/theme/Cartoon-caractor/charlie-brown.png",
+      "/assets/theme/Cartoon-caractor/daffy-duck.png",
+      "/assets/theme/Cartoon-caractor/donald-duck.png",
+      "/assets/theme/Cartoon-caractor/doraemon.png",
+      "/assets/theme/Cartoon-caractor/Pikachu.png",
+      "/assets/theme/Cartoon-caractor/shaggy-rogers.png",
+      "/assets/theme/Cartoon-caractor/tom-jerry.png",
     ],
   },
 ];
