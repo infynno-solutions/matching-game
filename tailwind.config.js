@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        "screen-background": "url('../assets/images/background.svg')",
+        "screen-background": "url('/background.svg')",
       },
       screens: {
         xs: "376px",

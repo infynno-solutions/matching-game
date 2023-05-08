@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import Image from "next/image";
-import modalImg from "../assets/images/popup1.png";
 
 const Modal = ({ open, scoredTime, moves, initialize, setOpen, setCancel }) => {
   let [isOpen, setIsOpen] = useState(open);
@@ -47,7 +46,7 @@ const Modal = ({ open, scoredTime, moves, initialize, setOpen, setCancel }) => {
                 <Dialog.Panel className="relative w-full max-w-3xl transform overflow-hidden rounded-2xl sm:p-6 text-center flex flex-col jus items-center align-middle transition-all">
                   <div className="-z-20 relative">
                     <Image
-                      src={modalImg}
+                      src="/popup.png"
                       alt="modal-img"
                       width={800}
                       height={800}
