@@ -138,7 +138,7 @@ export default function Home() {
         initialize={initialize}
         setCancel={setCancel}
       />
-      <div className="w-full flex flex-col py-3 justify-center gap-10 max-w-3xl min-h-[calc(100vh-200px)] sm:min-h-[calc(100vh-90px)] mx-auto">
+      <div className="w-full flex flex-col py-3 justify-center gap-10 max-w-3xl min-h-[calc(100vh-200px)] sm:min-h-[calc(100vh-110px)] mx-auto">
         <div
           className={classNames(
             "z-10 self-center",
