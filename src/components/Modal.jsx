@@ -45,12 +45,13 @@ const Modal = ({ open, scoredTime, moves, initialize, setOpen, setCancel }) => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="relative w-full max-w-3xl transform overflow-hidden rounded-2xl sm:p-6 text-center flex flex-col jus items-center align-middle transition-all">
-                  <div className="-z-20">
+                  <div className="-z-20 relative">
                     <Image
                       src={modalImg}
                       alt="modal-img"
                       width={800}
                       height={800}
+                      priority
                     />
                   </div>
                   <div className="absolute w-full max-w-xs md:max-w-none top-16 md:left-48 md:top-52 -z-10">
@@ -59,6 +60,7 @@ const Modal = ({ open, scoredTime, moves, initialize, setOpen, setCancel }) => {
                       alt="popper"
                       width={400}
                       height={400}
+                      priority
                     />
                   </div>
                   <div className="absolute xs:mt-3 sm:mt-0 top-1/4 sm:top-1/3 w-fit">

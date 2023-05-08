@@ -119,14 +119,15 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex justify-center">
-      <div className="absolute top-6 mx-auto sm:left-6 ">
+    <div className="flex flex-col sm:flex-col gap-10 sm:gap-0 justify-center ">
+      <div className="relative flex justify-center sm:justify-start p-6 w-full">
         <Image
           src={Logo}
           alt="logo"
           width={200}
           height={200}
           style={{ objectFit: "cover" }}
+          priority
         />
       </div>
       <Modal
@@ -137,7 +138,7 @@ export default function Home() {
         initialize={initialize}
         setCancel={setCancel}
       />
-      <div className="w-full flex flex-col justify-center gap-10 max-w-3xl h-screen mx-auto">
+      <div className="w-full flex flex-col mb-6 xs:mb-0 justify-center gap-10 max-w-3xl min-h-[calc(100vh-200px)] sm:min-h-[calc(100vh-90px)] mx-auto">
         <div
           className={classNames(
             "z-10 self-center",
@@ -159,7 +160,7 @@ export default function Home() {
         >
           <div
             className={classNames(
-              "rounded-md bg-pink-500 uppercase px-3 py-2 text-xl font-semibold text-white shadow-sm",
+              "rounded-md bg-pink-500 uppercase px-3 py-2 text-lg sm:text-xl font-semibold text-white shadow-sm",
               !cancel ? "block" : "hidden"
             )}
           >
@@ -167,7 +168,7 @@ export default function Home() {
           </div>
           <div
             className={classNames(
-              "rounded-md bg-pink-500 px-3 py-2 text-xl font-semibold text-white shadow-sm",
+              "rounded-md bg-pink-500 px-3 py-2 text-lg sm:text-xl font-semibold text-white shadow-sm",
               !cancel ? "block" : "hidden"
             )}
           >
@@ -176,7 +177,7 @@ export default function Home() {
         </div>
         <div
           className={classNames(
-            "w-fit mx-auto grid grid-cols-4 sm:grid-cols-5 px-3 gap-3 sm:gap-6",
+            "w-fit mx-auto grid grid-cols-4 sm:grid-cols-5 xs:px-3 gap-3 sm:gap-6",
             cancel ? "hidden" : "block"
           )}
         >
