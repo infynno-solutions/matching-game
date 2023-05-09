@@ -4,8 +4,7 @@ import Timer from "@/components/Timer";
 import Modal from "@/components/Modal";
 import ListBox from "@/components/ListBox";
 import classNames from "classnames";
-import Logo from "../assets/images/logo.svg";
-import Image from "next/image";
+import Navbar from "@/components/Navbar";
 
 const characters = [
   {
@@ -51,6 +50,8 @@ export default function Home() {
   const [scoredTime, setScoredTime] = useState(null);
   const [flipAudio, setFlipAudio] = useState(null);
   const [matchAudio, setMatchAudio] = useState(null);
+  const [winningAudio, setWinningAudio] = useState(null);
+
   const [cancel, setCancel] = useState(true);
 
   const shuffle = () => {
@@ -103,23 +104,24 @@ export default function Home() {
       setTimer(false);
     }
   }, [moves]);
+
   useEffect(() => {
     setFlipAudio(new Audio("/cardFlip.mp3"));
     setMatchAudio(new Audio("/cardMatch.wav"));
+    setWinningAudio(new Audio("/winning.wav"));
   }, []);
 
+  useEffect(() => {
+    if (gameOver) {
+      winningAudio.loop = true;
+      winningAudio.play();
+    } else {
+      winningAudio && winningAudio.pause();
+    }
+  }, [gameOver]);
   return (
     <div className="flex flex-col sm:flex-col gap-3 justify-center ">
-      <div className="relative flex justify-center sm:justify-start p-6 w-full">
-        <Image
-          src={Logo}
-          alt="logo"
-          width={200}
-          height={200}
-          style={{ objectFit: "cover" }}
-          priority
-        />
-      </div>
+      <Navbar />
       <Modal
         open={gameOver}
         setOpen={setGameOver}
@@ -144,7 +146,7 @@ export default function Home() {
         </div>
         <div
           className={classNames(
-            "grid grid-col-2 grid-flow-col gap-8 mx-auto",
+            "grid grid-col-2 grid-flow-col gap-8 mx-auto ",
             cancel ? "hidden" : "block"
           )}
         >

@@ -1,12 +1,18 @@
 import React from "react";
+import Logo from "../assets/images/logo.svg";
+import Image from "next/image";
 
 const Navbar = () => {
   return (
-    <div>
-      <div className="w-full flex justify-between items-center bg-purple-500 p-4 shadow-xl">
-        <div className="text-white mx-auto">Logo</div>
-        <div></div>
-      </div>
+    <div className="relative flex justify-center py-6 w-full">
+      <Image
+        src={Logo}
+        alt="logo"
+        width={200}
+        height={200}
+        style={{ objectFit: "cover" }}
+        priority
+      />
     </div>
   );
 };

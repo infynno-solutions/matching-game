@@ -23,7 +23,14 @@ const Card = ({ flipped, matched, className, data, ...props }) => {
             matched ? "opacity-80 border-4 border-blue-400" : ""
           )}
         >
-          <Image src={data} alt="image" sizes="128px" fill priority />
+          <Image
+            src={data}
+            alt="image"
+            className={classNames(flipped || matched ? "block" : "hidden")}
+            sizes="128px"
+            fill
+            priority
+          />
         </div>
       </div>
     </div>
