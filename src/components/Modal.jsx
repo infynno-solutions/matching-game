@@ -3,7 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import Image from "next/image";
 
-const Modal = ({ open, scoredTime, moves, initialize, setOpen, setCancel }) => {
+const Modal = ({ open, scoredTime, moves, initialize, setOpen, endGame }) => {
   let [isOpen, setIsOpen] = useState(open);
   useEffect(() => {
     open ? setIsOpen(true) : setIsOpen(false);
@@ -99,9 +99,9 @@ const Modal = ({ open, scoredTime, moves, initialize, setOpen, setCancel }) => {
                         type="button"
                         className="flex justify-center items-center rounded-xl border border-transparent bg-pink-500 outline-none px-4 py-1 sm:py-2 text-lg font-semibold text-white hover:bg-pink-400"
                         onClick={() => {
-                          setOpen(false);
                           closeModal();
-                          setCancel(true);
+                          setOpen(false);
+                          endGame();
                         }}
                       >
                         Cancel

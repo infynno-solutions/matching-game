@@ -5,6 +5,7 @@ import Modal from "@/components/Modal";
 import ListBox from "@/components/ListBox";
 import classNames from "classnames";
 import Navbar from "@/components/Navbar";
+import { NextSeo } from "next-seo";
 
 const characters = [
   {
@@ -51,7 +52,6 @@ export default function Home() {
   const [flipAudio, setFlipAudio] = useState(null);
   const [matchAudio, setMatchAudio] = useState(null);
   const [winningAudio, setWinningAudio] = useState(null);
-
   const [cancel, setCancel] = useState(true);
 
   const shuffle = () => {
@@ -98,6 +98,10 @@ export default function Home() {
       }
     }
   };
+  const endGame = () => {
+    setTimer(false);
+    setCancel(true);
+  };
   useEffect(() => {
     if (matchedCards.length == 20) {
       setGameOver(true);
@@ -121,14 +125,27 @@ export default function Home() {
   }, [gameOver]);
   return (
     <div className="flex flex-col sm:flex-col gap-3 justify-center ">
-      <Navbar />
+      <NextSeo
+        title="Memory Lane - Infynno Solutions"
+        description="The game starts with all the cards face down and players take turns to turn over two cards. If the two cards have the same picture, then they keep the cards, otherwise they turn the cards face down again. The winner is the person with the most cards when all the cards have been taken."
+        openGraph={{
+          images: {
+            url: "/cover.png",
+            width: 850,
+            height: 650,
+            alt: "memorylane-img",
+          },
+        }}
+      />
+      <Navbar endGame={endGame} />
       <Modal
         open={gameOver}
         setOpen={setGameOver}
         scoredTime={scoredTime}
         moves={moves}
         initialize={initialize}
-        setCancel={setCancel}
+        // setCancel={setCancel}
+        endGame={endGame}
       />
       <div className="w-full flex flex-col py-3 justify-center gap-10 max-w-3xl min-h-[calc(100vh-200px)] mx-auto">
         <div

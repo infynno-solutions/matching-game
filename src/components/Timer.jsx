@@ -20,6 +20,7 @@ const Timer = ({ start, setTime }) => {
           }
           return prevSeconds + 1;
         });
+        console.log(seconds, "secondss");
       }, 1000);
 
       return () => clearInterval(interval);
