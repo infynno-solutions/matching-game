@@ -129,12 +129,19 @@ export default function Home() {
         title="Memory Lane - Infynno Solutions"
         description="The game starts with all the cards face down and players take turns to turn over two cards. If the two cards have the same picture, then they keep the cards, otherwise they turn the cards face down again. The winner is the person with the most cards when all the cards have been taken."
         openGraph={{
-          images: {
-            url: "/cover.png",
-            width: 850,
-            height: 650,
-            alt: "memorylane-img",
-          },
+          url: process.env.NEXT_PUBLIC_APP_URL,
+          title: "Memory Lane - Infynno Solutions",
+          description:
+            "The game starts with all the cards face down and players take turns to turn over two cards. If the two cards have the same picture, then they keep the cards, otherwise they turn the cards face down again. The winner is the person with the most cards when all the cards have been taken.",
+          images: [
+            {
+              url: "/cover.png",
+              width: 800,
+              height: 600,
+              alt: "memorylane-img",
+              type: "image/png",
+            },
+          ],
         }}
       />
       <Navbar endGame={endGame} />
@@ -144,7 +151,6 @@ export default function Home() {
         scoredTime={scoredTime}
         moves={moves}
         initialize={initialize}
-        // setCancel={setCancel}
         endGame={endGame}
       />
       <div className="w-full flex flex-col py-3 justify-center gap-10 max-w-3xl min-h-[calc(100vh-200px)] mx-auto">
