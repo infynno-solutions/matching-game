@@ -4,7 +4,14 @@ import { useState } from "react";
 import Image from "next/image";
 import classNames from "classnames";
 
-const ListBox = ({ setTheme, characters, timer, initialize }) => {
+const ListBox = ({
+  setTheme,
+  characters,
+  timer,
+  initialize,
+  cancel,
+  setCancel,
+}) => {
   const [selected, setSelected] = useState(characters[0]);
   useEffect(() => {
     setTheme(selected?.data);

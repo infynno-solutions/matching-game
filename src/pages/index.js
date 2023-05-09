@@ -6,39 +6,8 @@ import ListBox from "@/components/ListBox";
 import classNames from "classnames";
 import Navbar from "@/components/Navbar";
 import { NextSeo } from "next-seo";
-
-const characters = [
-  {
-    name: "Pokemon Characters",
-    data: [
-      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png",
-      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/005.png",
-      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/006.png",
-      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/007.png",
-      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/002.png",
-      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/003.png",
-      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/004.png",
-      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/008.png",
-      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/009.png",
-      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/010.png",
-    ],
-  },
-  {
-    name: "Cartoon Characters",
-    data: [
-      "/assets/theme/Cartoon-caractor/bart-simpson.png",
-      "/assets/theme/Cartoon-caractor/blossom-bubbles.png",
-      "/assets/theme/Cartoon-caractor/bugs-bunny.png",
-      "/assets/theme/Cartoon-caractor/charlie-brown.png",
-      "/assets/theme/Cartoon-caractor/daffy-duck.png",
-      "/assets/theme/Cartoon-caractor/donald-duck.png",
-      "/assets/theme/Cartoon-caractor/doraemon.png",
-      "/assets/theme/Cartoon-caractor/Pikachu.png",
-      "/assets/theme/Cartoon-caractor/shaggy-rogers.png",
-      "/assets/theme/Cartoon-caractor/tom-jerry.png",
-    ],
-  },
-];
+import Instruction from "@/components/Instruction";
+import { THEME_LIST } from "@/utils/theme";
 
 export default function Home() {
   const [theme, setTheme] = useState([]);
@@ -124,7 +93,7 @@ export default function Home() {
     }
   }, [gameOver]);
   return (
-    <div className="flex flex-col sm:flex-col gap-3 justify-center ">
+    <div className="flex flex-col sm:flex-col gap-3 justify-center">
       <NextSeo
         title="Memory Lane - Infynno Solutions"
         description="The game starts with all the cards face down and players take turns to turn over two cards. If the two cards have the same picture, then they keep the cards, otherwise they turn the cards face down again. The winner is the person with the most cards when all the cards have been taken."
@@ -144,6 +113,7 @@ export default function Home() {
           ],
         }}
       />
+      <Instruction />
       <Navbar endGame={endGame} />
       <Modal
         open={gameOver}
@@ -162,9 +132,11 @@ export default function Home() {
         >
           <ListBox
             setTheme={setTheme}
-            characters={characters}
+            characters={THEME_LIST}
             timer={timer || gameOver}
             initialize={initialize}
+            cancel={cancel}
+            setCancel={setCancel}
           />
         </div>
         <div
@@ -192,10 +164,12 @@ export default function Home() {
         </div>
         <div
           className={classNames(
-            "w-fit mx-auto grid grid-cols-4 sm:grid-cols-5 xs:px-3 gap-3 sm:gap-6",
+            "w-fit relative  mx-auto grid grid-cols-4 sm:grid-cols-5 xs:px-3 gap-3 sm:gap-6",
             cancel ? "hidden" : "block"
           )}
         >
+          {/* <Instruction /> */}
+
           {boardData?.map((data, index) => {
             const flipped = flippedCards.includes(index) ? true : false;
             const matched = matchedCards.includes(index) ? true : false;

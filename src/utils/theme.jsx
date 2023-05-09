@@ -1,0 +1,88 @@
+import { shuffle, take } from "lodash";
+
+const animalsData = [
+  "/assets/theme/Animals/1.png",
+  "/assets/theme/Animals/2.png",
+  "/assets/theme/Animals/3.png",
+  "/assets/theme/Animals/4.png",
+  "/assets/theme/Animals/5.png",
+  "/assets/theme/Animals/6.png",
+  "/assets/theme/Animals/7.png",
+  "/assets/theme/Animals/8.png",
+  "/assets/theme/Animals/9.png",
+  "/assets/theme/Animals/10.png",
+  "/assets/theme/Animals/11.png",
+  "/assets/theme/Animals/12.png",
+  "/assets/theme/Animals/13.png",
+  "/assets/theme/Animals/14.png",
+  "/assets/theme/Animals/15.png",
+  "/assets/theme/Animals/16.png",
+  "/assets/theme/Animals/17.png",
+  "/assets/theme/Animals/18.png",
+  "/assets/theme/Animals/19.png",
+  "/assets/theme/Animals/20.png",
+];
+
+const fruitsData = [
+  "/assets/theme/Fruits/F1.png",
+  "/assets/theme/Fruits/F2.png",
+  "/assets/theme/Fruits/F3.png",
+  "/assets/theme/Fruits/F4.png",
+  "/assets/theme/Fruits/F5.png",
+  "/assets/theme/Fruits/F6.png",
+  "/assets/theme/Fruits/F7.png",
+  "/assets/theme/Fruits/F8.png",
+  "/assets/theme/Fruits/F9.png",
+  "/assets/theme/Fruits/F10.png",
+  "/assets/theme/Fruits/F11.png",
+  "/assets/theme/Fruits/F12.png",
+  "/assets/theme/Fruits/F13.png",
+  "/assets/theme/Fruits/F14.png",
+  "/assets/theme/Fruits/F15.png",
+  "/assets/theme/Fruits/F16.png",
+  "/assets/theme/Fruits/F17.png",
+  "/assets/theme/Fruits/F18.png",
+  "/assets/theme/Fruits/F19.png",
+  "/assets/theme/Fruits/F20.png",
+];
+
+export const THEME_LIST = [
+  {
+    name: "Pokemon Characters",
+    data: [
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png",
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/005.png",
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/006.png",
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/007.png",
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/002.png",
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/003.png",
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/004.png",
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/008.png",
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/009.png",
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/010.png",
+    ],
+  },
+  {
+    name: "Cartoon Characters",
+    data: [
+      "/assets/theme/Cartoon-caractor/bart-simpson.png",
+      "/assets/theme/Cartoon-caractor/blossom-bubbles.png",
+      "/assets/theme/Cartoon-caractor/bugs-bunny.png",
+      "/assets/theme/Cartoon-caractor/charlie-brown.png",
+      "/assets/theme/Cartoon-caractor/daffy-duck.png",
+      "/assets/theme/Cartoon-caractor/donald-duck.png",
+      "/assets/theme/Cartoon-caractor/doraemon.png",
+      "/assets/theme/Cartoon-caractor/Pikachu.png",
+      "/assets/theme/Cartoon-caractor/shaggy-rogers.png",
+      "/assets/theme/Cartoon-caractor/tom-jerry.png",
+    ],
+  },
+  {
+    name: "Animals",
+    data: take(shuffle(animalsData), 10),
+  },
+  {
+    name: "Fruits",
+    data: take(shuffle(fruitsData), 10),
+  },
+];
