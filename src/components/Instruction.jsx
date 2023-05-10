@@ -2,9 +2,28 @@ import React, { useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import classNames from "classnames";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { userNameSchema } from "@/utils/validationSchema";
+import supabase from "@/config/supabaseClient";
 
 const Instruction = () => {
   let [isOpen, setIsOpen] = useState(true);
+  const [ipAddress, setIPAddress] = useState("");
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchIPAddress = async () => {
+      try {
+        const response = await fetch("https://api.ipify.org/?format=json");
+        const data = await response.json();
+        setIPAddress(data.ip);
+      } catch (error) {
+        console.log("Error retrieving IP address:", error);
+      }
+    };
+
+    fetchIPAddress();
+  }, []);
 
   function closeModal() {
     setIsOpen(false);
@@ -13,9 +32,22 @@ const Instruction = () => {
   function openModal() {
     setIsOpen(true);
   }
+
+  const handleSumit = async (values) => {
+    const { data, error } = await supabase
+      .from("users")
+      .insert([{ username: values.username, ip_address: ipAddress }]);
+
+    if (!error) {
+      closeModal();
+      setError(null);
+    } else {
+      setError("Username already taken");
+    }
+  };
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={closeModal}>
+      <Dialog as="div" className="relative z-10" onClose={() => null}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -40,7 +72,7 @@ const Instruction = () => {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="relative w-full px-5 max-w-3xl transform overflow-hidden rounded-2xl sm:p-6 flex flex-col jus items-center align-middle transition-all">
-                <div className="flex flex-col items-center w-full max-w-3xl gap-4 sm:gap-8 bg-purple-950 shadow-xl py-4 sm:py-8 px-3 rounded-lg">
+                <div className="flex flex-col items-center w-full max-w-3xl gap-4 sm:gap-8 bg-purple-950 shadow-xl py-8 px-3 rounded-lg">
                   <Dialog.Title
                     as="div"
                     className="text-3xl z-20 leading-6 text-white"
@@ -66,14 +98,39 @@ const Instruction = () => {
                     <li>Aim for a high score and enjoy the game!</li>
                     <li>Reshuffle and play again for more fun.</li>
                   </ul>
-                  <button
-                    onClick={closeModal}
-                    className={classNames(
-                      "rounded-md bg-pink-500 hover:scale-110 outline-none transition-all ease-in-out delay-75 uppercase px-3 py-2 text-sm sm:text-lg cursor-pointer font-semibold text-white shadow-sm"
-                    )}
+                  <Formik
+                    initialValues={{
+                      username: "",
+                    }}
+                    validationSchema={userNameSchema}
+                    onSubmit={handleSumit}
                   >
-                    Start
-                  </button>
+                    {({ errors, touched }) => (
+                      <Form className="flex gap-4 justify-center items-center flex-wrap">
+                        <div className="relative">
+                          <Field
+                            type="text"
+                            name="username"
+                            placeholder="User Name"
+                            className="p-2 sm:p-3 rounded-md text-white bg-transparent border border-purple-500 outline-none"
+                          />
+                          <p className="text-red-500 w-full absolute mt-1">
+                            <ErrorMessage name="username" />
+                            {error && error}
+                          </p>
+                        </div>
+                        <button
+                          type="submit"
+                          className={classNames(
+                            "rounded-md bg-pink-500 relative hover:scale-110 outline-none transition-all ease-in-out delay-75 uppercase px-3 py-2 text-sm sm:text-lg cursor-pointer font-semibold text-white shadow-sm",
+                            error ? "mt-5 xs:mt-0" : "mt-2 xs:mt-0"
+                          )}
+                        >
+                          Start
+                        </button>
+                      </Form>
+                    )}
+                  </Formik>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

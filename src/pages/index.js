@@ -114,7 +114,10 @@ export default function Home() {
         }}
       />
       <LeftArrow
-        className="absolute top-6 hidden sm:block left-6 w-8 h-8 text-white hover:scale-105 cursor-pointer"
+        className={classNames(
+          "absolute top-6  left-6 w-8 h-8 text-white hover:scale-105 cursor-pointer",
+          cancel ? "hidden" : "hidden sm:block"
+        )}
         onClick={() => endGame()}
       />
       <Instruction />
@@ -139,8 +142,6 @@ export default function Home() {
             characters={THEME_LIST}
             timer={timer || gameOver}
             initialize={initialize}
-            cancel={cancel}
-            setCancel={setCancel}
           />
         </div>
         <div
@@ -172,8 +173,6 @@ export default function Home() {
             cancel ? "hidden" : "block"
           )}
         >
-          {/* <Instruction /> */}
-
           {boardData?.map((data, index) => {
             const flipped = flippedCards.includes(index) ? true : false;
             const matched = matchedCards.includes(index) ? true : false;
