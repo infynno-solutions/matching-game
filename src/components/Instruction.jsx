@@ -40,13 +40,18 @@ const Instruction = () => {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="relative w-full px-5 max-w-3xl transform overflow-hidden rounded-2xl sm:p-6 flex flex-col jus items-center align-middle transition-all">
-                <div className="flex flex-col items-center w-full max-w-3xl gap-8 bg-purple-950 shadow-xl py-8 px-3 rounded-lg">
+                <div className="flex flex-col items-center w-full max-w-3xl gap-4 sm:gap-8 bg-purple-950 shadow-xl py-4 sm:py-8 px-3 rounded-lg">
                   <Dialog.Title
-                    as="h3"
-                    className="text-3xl z-20 font-extrabold leading-6 text-white"
+                    as="div"
+                    className="text-3xl z-20 leading-6 text-white"
                   >
                     <div className="flex flex-col items-center gap-2 sm:gap-4">
-                      <h2 className="text-xl sm:text-3xl">Instructions</h2>
+                      <h2 className="text-xl sm:text-3xl font-extrabold">
+                        Matching the cards
+                      </h2>
+                      <h3 className="text-lg sm:text-2xl font-semibold">
+                        Instructions
+                      </h3>
                     </div>
                   </Dialog.Title>
                   <ul className="text-white text-base xs:text-lg sm:text-xl ml-10 flex flex-col gap-3 list-decimal">
@@ -64,7 +69,7 @@ const Instruction = () => {
                   <button
                     onClick={closeModal}
                     className={classNames(
-                      "rounded-md bg-pink-500 hover:scale-110 outline-none transition-all ease-in-out delay-75 uppercase px-3 py-2 text-lg cursor-pointer font-semibold text-white shadow-sm"
+                      "rounded-md bg-pink-500 hover:scale-110 outline-none transition-all ease-in-out delay-75 uppercase px-3 py-2 text-sm sm:text-lg cursor-pointer font-semibold text-white shadow-sm"
                     )}
                   >
                     Start

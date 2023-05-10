@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import { NextSeo } from "next-seo";
 import Instruction from "@/components/Instruction";
 import { THEME_LIST } from "@/utils/theme";
+import LeftArrow from "@/assets/icons/LeftArrow";
 
 export default function Home() {
   const [theme, setTheme] = useState([]);
@@ -53,9 +54,8 @@ export default function Home() {
           } else {
             setTimeout(() => {
               setFlippedCards([]);
-            }, 600);
+            }, 500);
           }
-
           setFlippedCards([...flippedCards, i]);
         } else if (flippedCards.length == 2) {
           setFlippedCards([i]);
@@ -112,6 +112,10 @@ export default function Home() {
             },
           ],
         }}
+      />
+      <LeftArrow
+        className="absolute top-6 hidden sm:block left-6 w-8 h-8 text-white hover:scale-105 cursor-pointer"
+        onClick={() => endGame()}
       />
       <Instruction />
       <Navbar endGame={endGame} />

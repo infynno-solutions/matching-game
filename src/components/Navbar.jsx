@@ -6,7 +6,7 @@ const Navbar = ({ endGame }) => {
   return (
     <div
       onClick={() => endGame()}
-      className="relative flex cursor-pointer justify-center py-6 w-full"
+      className="relative cursor-pointer py-6 w-fit mx-auto"
     >
       <Image
         src={Logo}
