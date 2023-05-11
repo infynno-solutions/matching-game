@@ -37,8 +37,6 @@ const Instruction = () => {
     const { data, error } = await supabase
       .from("users")
       .insert({ username: values.username, ip_address: ipAddress });
-    console.log(data, "datatatata");
-    console.log(error, "datatatata");
     if (!error) {
       closeModal();
       setError(null);
@@ -51,9 +49,6 @@ const Instruction = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("error", error);
-  }, [error]);
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={() => null}>
