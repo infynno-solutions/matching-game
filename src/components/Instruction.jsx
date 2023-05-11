@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import classNames from "classnames";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import { userNameSchema } from "@/utils/validationSchema";
 import supabase from "@/config/supabaseClient";
 
 const Instruction = () => {
   let [isOpen, setIsOpen] = useState(true);
   const [ipAddress, setIPAddress] = useState("");
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchIPAddress = async () => {
@@ -36,15 +36,24 @@ const Instruction = () => {
   const handleSumit = async (values) => {
     const { data, error } = await supabase
       .from("users")
-      .insert([{ username: values.username, ip_address: ipAddress }]);
-
+      .insert({ username: values.username, ip_address: ipAddress });
+    console.log(data, "datatatata");
+    console.log(error, "datatatata");
     if (!error) {
       closeModal();
       setError(null);
     } else {
-      setError("Username already taken");
+      if (error.code == 23505) {
+        setError("Username already taken");
+      } else {
+        setError("Something went wrong");
+      }
     }
   };
+
+  useEffect(() => {
+    console.log("error", error);
+  }, [error]);
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={() => null}>
@@ -104,6 +113,7 @@ const Instruction = () => {
                     }}
                     validationSchema={userNameSchema}
                     onSubmit={handleSumit}
+                    enableReinitialize
                   >
                     {({ errors, touched }) => (
                       <Form className="flex gap-4 justify-center items-center flex-wrap">
@@ -112,11 +122,15 @@ const Instruction = () => {
                             type="text"
                             name="username"
                             placeholder="User Name"
+                            onKeyUp={() => setError(null)}
                             className="p-2 sm:p-3 rounded-md text-white bg-transparent border border-purple-500 outline-none"
                           />
                           <p className="text-red-500 w-full absolute mt-1">
-                            <ErrorMessage name="username" />
-                            {error && error}
+                            {errors.username && touched.username
+                              ? errors.username
+                              : error
+                              ? error
+                              : ""}
                           </p>
                         </div>
                         <button
