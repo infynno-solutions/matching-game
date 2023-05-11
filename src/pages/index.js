@@ -9,6 +9,8 @@ import { NextSeo } from "next-seo";
 import Instruction from "@/components/Instruction";
 import { THEME_LIST } from "@/utils/theme";
 import LeftArrow from "@/assets/icons/LeftArrow";
+import supabase from "@/config/supabaseClient";
+import Link from "next/link";
 
 export default function Home() {
   const [theme, setTheme] = useState([]);
@@ -71,12 +73,29 @@ export default function Home() {
     setTimer(false);
     setCancel(true);
   };
+
+  const updateScoreBoard = async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const { data, error, status, statusText } = await supabase
+      .from("scoreboard")
+      .upsert(
+        { user_id: user.id, moves: moves, time: scoredTime },
+        { onConflict: "user_id" }
+      )
+      .select();
+  };
   useEffect(() => {
     if (matchedCards.length == 20) {
       setGameOver(true);
       setTimer(false);
     }
   }, [moves]);
+
+  useEffect(() => {
+    if (gameOver) {
+      updateScoreBoard();
+    }
+  }, [scoredTime]);
 
   useEffect(() => {
     setFlipAudio(new Audio("/cardFlip.mp3"));
@@ -115,13 +134,19 @@ export default function Home() {
       />
       <LeftArrow
         className={classNames(
-          "absolute top-6  left-6 w-8 h-8 text-white hover:scale-105 cursor-pointer",
+          "absolute top-6 left-6 w-8 h-8 text-white hover:scale-105 cursor-pointer",
           cancel ? "hidden" : "hidden sm:block"
         )}
         onClick={() => endGame()}
       />
+      <Link
+        href={"/scoreboard"}
+        className="absolute top-6 right-6 w-fit text-white text-lg font-semibold hover:scale-105 cursor-pointer"
+      >
+        Score Board
+      </Link>
       <Instruction />
-      <Navbar endGame={endGame} />
+      <Navbar onClick={() => endGame()} />
       <Modal
         open={gameOver}
         setOpen={setGameOver}
@@ -129,6 +154,7 @@ export default function Home() {
         moves={moves}
         initialize={initialize}
         endGame={endGame}
+        setMatchedCards={setMatchedCards}
       />
       <div className="w-full flex flex-col py-3 justify-center gap-10 max-w-3xl min-h-[calc(100vh-200px)] mx-auto">
         <div

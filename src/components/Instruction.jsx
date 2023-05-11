@@ -34,14 +34,21 @@ const Instruction = () => {
   }
 
   const handleSumit = async (values) => {
-    const { data, error } = await supabase
+    const { data, error, status, statusText } = await supabase
       .from("users")
-      .insert({ username: values.username, ip_address: ipAddress });
+      .insert({ username: values.username, ip_address: ipAddress })
+      .select();
     if (!error) {
+      if (data) {
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ id: data[0].id, username: data[0].username })
+        );
+      }
       closeModal();
       setError(null);
     } else {
-      if (error.code == 23505) {
+      if (status == 409) {
         setError("Username already taken");
       } else {
         setError("Something went wrong");

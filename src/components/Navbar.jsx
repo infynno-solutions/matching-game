@@ -2,12 +2,9 @@ import React from "react";
 import Logo from "../assets/images/logo.svg";
 import Image from "next/image";
 
-const Navbar = ({ endGame }) => {
+const Navbar = ({ ...props }) => {
   return (
-    <div
-      onClick={() => endGame()}
-      className="relative cursor-pointer py-6 w-fit mx-auto"
-    >
+    <div className="relative cursor-pointer py-6 w-fit mx-auto" {...props}>
       <Image
         src={Logo}
         alt="logo"

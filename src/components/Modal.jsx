@@ -3,7 +3,15 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import Image from "next/image";
 
-const Modal = ({ open, scoredTime, moves, initialize, setOpen, endGame }) => {
+const Modal = ({
+  open,
+  scoredTime,
+  moves,
+  initialize,
+  setOpen,
+  endGame,
+  setMatchedCards,
+}) => {
   let [isOpen, setIsOpen] = useState(open);
   useEffect(() => {
     open ? setIsOpen(true) : setIsOpen(false);
@@ -11,6 +19,7 @@ const Modal = ({ open, scoredTime, moves, initialize, setOpen, endGame }) => {
 
   function closeModal() {
     setIsOpen(false);
+    setMatchedCards([]);
   }
 
   function openModal() {
