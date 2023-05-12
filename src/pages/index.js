@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import Card from "@/components/Card";
 import Timer from "@/components/Timer";
 import Modal from "@/components/Modal";
@@ -11,6 +11,8 @@ import { THEME_LIST } from "@/utils/theme";
 import LeftArrow from "@/assets/icons/LeftArrow";
 import supabase from "@/config/supabaseClient";
 import Link from "next/link";
+import DropDown from "@/components/DropDown";
+import AppContext from "@/components/AppContext";
 
 export default function Home() {
   const [theme, setTheme] = useState([]);
@@ -19,13 +21,12 @@ export default function Home() {
   const [matchedCards, setMatchedCards] = useState([]);
   const [moves, setMoves] = useState(0);
   const [gameOver, setGameOver] = useState(false);
-  const [timer, setTimer] = useState(false);
+  // const [timer, setTimer] = useState(false);
   const [scoredTime, setScoredTime] = useState(null);
   const [flipAudio, setFlipAudio] = useState(null);
   const [matchAudio, setMatchAudio] = useState(null);
   const [winningAudio, setWinningAudio] = useState(null);
-  const [cancel, setCancel] = useState(true);
-
+  const context = useContext(AppContext);
   const shuffle = () => {
     const shuffledCards = [...theme, ...theme]
       .sort(() => Math.random() - 0.5)
@@ -38,11 +39,11 @@ export default function Home() {
   const initialize = () => {
     shuffle();
     setGameOver(false);
-    setCancel(false);
+    context.setCancel(false);
     setFlippedCards([]);
     setMatchedCards([]);
     setMoves(0);
-    setTimer(true);
+    context.setTimer(true);
   };
   const updateActiveCards = (i) => {
     if (!matchedCards.includes(i)) {
@@ -70,8 +71,8 @@ export default function Home() {
     }
   };
   const endGame = () => {
-    setTimer(false);
-    setCancel(true);
+    context.setTimer(false);
+    context.setCancel(true);
   };
 
   const updateScoreBoard = async () => {
@@ -87,7 +88,7 @@ export default function Home() {
   useEffect(() => {
     if (matchedCards.length == 20) {
       setGameOver(true);
-      setTimer(false);
+      context.setTimer(false);
     }
   }, [moves]);
 
@@ -111,6 +112,9 @@ export default function Home() {
       winningAudio && winningAudio.pause();
     }
   }, [gameOver]);
+
+  useEffect(() => {}, [context.cancel]);
+
   return (
     <div className="flex flex-col sm:flex-col gap-3 justify-center">
       <NextSeo
@@ -135,18 +139,23 @@ export default function Home() {
       <LeftArrow
         className={classNames(
           "absolute top-6 left-6 w-8 h-8 text-white hover:scale-105 cursor-pointer",
-          cancel ? "hidden" : "hidden sm:block"
+          context.cancel ? "hidden" : "hidden sm:block"
         )}
         onClick={() => endGame()}
       />
+
+      <Instruction />
+      <Navbar onClick={() => endGame()} />
       <Link
         href={"/scoreboard"}
-        className="absolute top-6 right-6 w-fit text-white text-lg font-semibold hover:scale-105 cursor-pointer"
+        className={classNames(
+          "relative mx-auto sm:absolute sm:top-6 sm:left-6 w-fit text-white text-lg font-semibold hover:scale-105 cursor-pointer",
+          context.cancel ? "block" : "hidden"
+        )}
       >
         Score Board
       </Link>
-      <Instruction />
-      <Navbar onClick={() => endGame()} />
+      <DropDown />
       <Modal
         open={gameOver}
         setOpen={setGameOver}
@@ -160,26 +169,26 @@ export default function Home() {
         <div
           className={classNames(
             "z-10 self-center",
-            cancel ? "block" : "hidden"
+            context.cancel ? "block" : "hidden"
           )}
         >
           <ListBox
             setTheme={setTheme}
             characters={THEME_LIST}
-            timer={timer || gameOver}
+            timer={context.timer || gameOver}
             initialize={initialize}
           />
         </div>
         <div
           className={classNames(
             "grid grid-col-2 grid-flow-col gap-8 mx-auto ",
-            cancel ? "hidden" : "block"
+            context.cancel ? "hidden" : "block"
           )}
         >
           <div
             className={classNames(
               "rounded-md bg-pink-500 uppercase px-3 py-2 text-lg sm:text-xl font-semibold text-white shadow-sm",
-              !cancel ? "block" : "hidden"
+              !context.cancel ? "block" : "hidden"
             )}
           >
             Moves - {moves}
@@ -187,16 +196,16 @@ export default function Home() {
           <div
             className={classNames(
               "rounded-md bg-pink-500 px-3 py-2 text-lg sm:text-xl font-semibold text-white shadow-sm",
-              !cancel ? "block" : "hidden"
+              !context.cancel ? "block" : "hidden"
             )}
           >
-            <Timer start={timer} setTime={setScoredTime} />
+            <Timer start={context.timer} setTime={setScoredTime} />
           </div>
         </div>
         <div
           className={classNames(
             "w-fit relative  mx-auto grid grid-cols-4 sm:grid-cols-5 xs:px-3 gap-3 sm:gap-6",
-            cancel ? "hidden" : "block"
+            context.cancel ? "hidden" : "block"
           )}
         >
           {boardData?.map((data, index) => {

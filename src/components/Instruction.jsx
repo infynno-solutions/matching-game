@@ -1,15 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import classNames from "classnames";
 import { Field, Form, Formik } from "formik";
 import { userNameSchema } from "@/utils/validationSchema";
 import supabase from "@/config/supabaseClient";
+import AppContext from "./AppContext";
 
 const Instruction = () => {
   let [isOpen, setIsOpen] = useState(true);
   const [ipAddress, setIPAddress] = useState("");
   const [error, setError] = useState("");
+  const context = useContext(AppContext);
 
   useEffect(() => {
     const fetchIPAddress = async () => {
@@ -33,6 +35,10 @@ const Instruction = () => {
     setIsOpen(true);
   }
 
+  useEffect(() => {
+    localStorage.getItem("user") ? setIsOpen(false) : setIsOpen(true);
+  }, [context.user]);
+
   const handleSumit = async (values) => {
     const { data, error, status, statusText } = await supabase
       .from("users")
@@ -44,6 +50,8 @@ const Instruction = () => {
           "user",
           JSON.stringify({ id: data[0].id, username: data[0].username })
         );
+        context.setUser({ id: data[0].id, username: data[0].username });
+        context.setCancel(true);
       }
       closeModal();
       setError(null);
